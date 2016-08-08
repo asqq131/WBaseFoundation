@@ -13,17 +13,20 @@
 
 //+ (instancetype)client;
 
-+ (nullable NSURLSessionDataTask *)requestGetByUrlString:(NSString * _Nullable)urlString
+// 通用接口
++ (nullable NSURLSessionDataTask *)requestWithMethod:(NSString * _Nullable)method
+                                           urlString:(NSString * _Nullable)urlString
+                                          parameters:(NSDictionary * _Nullable)parameters
+                                            progress:(nullable void (^)(NSProgress * _Nullable uploadProgress))uploadProgress
+                                             success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
+                                             failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure;
+
++ (nullable NSURLSessionDataTask *)requestGetWithUrlString:(NSString * _Nullable)urlString
                         parameters:(NSDictionary * _Nullable)parameters
-                            success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable))success
+                            success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
                             failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure;
 
-+ (nullable NSURLSessionDataTask *)requestDeleteByUrlString:(nullable NSString *)urlString
-                        parameters:(NSDictionary * _Nullable)parameters
-                            success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable))success
-                            failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure;
-
-+ (nullable NSURLSessionDataTask *)requestPostByUrlString:(NSString * _Nullable)urlString
++ (nullable NSURLSessionDataTask *)requestPostWithUrlString:(NSString * _Nullable)urlString
                              parameters:(nullable id)parameters
                                progress:(nullable void (^)(NSProgress * _Nullable uploadProgress)) uploadProgress
                                 success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success

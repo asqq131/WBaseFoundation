@@ -35,32 +35,76 @@
 //    return self;
 //}
 
++ (nullable NSURLSessionDataTask *)requestWithMethod:(NSString *)method
+                                            urlString:(NSString * _Nullable)urlString
+                                            parameters:(NSDictionary * _Nullable)parameters
+                                            progress:(nullable void (^)(NSProgress * _Nullable uploadProgress))uploadProgress
+                                            success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
+                                            failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure
+{
+    DebugLog(@"接口 URL-> %@", urlString);
+    DebugLog(@"参数-> %@", parameters);
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    manager.requestSerializer.timeoutInterval = 60.0; // 超时请求，默认60秒
+    
+    if ([method isEqualToString:@"GET"]) {
+        return [manager GET:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            DebugLog(@"GET请求完成");
+            success(task, responseObject);
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            DebugLog(@"GET请求失败: %@", error);
+            failure(task, error);
+        }];
+        
+    } else {
+        return [manager POST:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] parameters:parameters progress:uploadProgress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            DebugLog(@"GET请求完成");
+            success(task, responseObject);
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            DebugLog(@"GET请求失败: %@", error);
+            failure(task, error);
+        }];
+    }
+}
+
 #pragma mark 网络请求GET类方法
-+ (nullable NSURLSessionDataTask *)requestGetByUrlString:(NSString * _Nullable)urlString
++ (nullable NSURLSessionDataTask *)requestGetWithUrlString:(NSString * _Nullable)urlString
                             parameters:(NSDictionary * _Nullable)parameters
-                            success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable))success
+                            success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
                             failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure
 {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-//    manager.requestSerializer.timeoutInterval = 60.0; // 超时请求，默认60秒
-    
-    return [manager GET:[[NSString stringWithFormat:@"%@%@", kMainAPIDomain, urlString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] parameters:nil progress:nil success:success failure:failure];
+    return [self requestWithMethod:@"GET" urlString:urlString parameters:parameters progress:nil success:success failure:failure];
 }
 
-#pragma mark 网络请求DELETE类方法
-+ (nullable NSURLSessionDataTask *)requestDeleteByUrlString:(nullable NSString *)urlString
-                            parameters:(NSDictionary * _Nullable)parameters
-                            success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable))success
-                            failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure
+#pragma mark 网络请求POST类方法
++ (nullable NSURLSessionDataTask *)requestPostWithUrlString:(NSString * _Nullable)urlString
+                             parameters:(nullable id)parameters
+                               progress:(nullable void (^)(NSProgress * _Nullable uploadProgress))uploadProgress
+                                success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
+                                failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure
 {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:parameters];
     
-//    manager.requestSerializer.timeoutInterval = 60.0; // 超时请求，默认60秒
+    // port：端口参数；port 1安卓 2苹果
+//    [dict setObject:@"2" forKey:@"port#"]; // 加密情况下使用
+    [dict setObject:@"2" forKey:@"port"];
     
-    return [manager DELETE:[[NSString stringWithFormat:@"%@%@", kMainAPIDomain, urlString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] parameters:parameters success:success failure:failure];
+//    // token：时间戳
+//    NSString *token = tokenDes();
+//    [dict setObject:token forKey:@"token#"];
+//    
+//    // mKey：参数值和参数键加密
+//    NSString *mKey = compareKey(dict);
+////    NSLog(@"mKey : %@", mKey);
+//    [dict setObject:mKey forKey:@"mKey"];
+    
+    return [self requestWithMethod:@"POST" urlString:urlString parameters:dict progress:uploadProgress success:success failure:failure];
 }
 
+#pragma mark - 加密
 #pragma mark 当前时间戳 des3加密
 NSString* tokenDes() {
     NSDate *today = [NSDate date];
@@ -70,8 +114,8 @@ NSString* tokenDes() {
     // 时间转换成时间戳
     NSString *timeSp = [NSString stringWithFormat:@"%lld", (long long)[localeDate timeIntervalSince1970] * 1000];
     NSString *token = [NSString threeDesEncrypt:timeSp];
-//    NSLog(@"timeSp : %@", timeSp);
-//    NSLog(@"timeSp 3DES : %@", token);
+    //    NSLog(@"timeSp : %@", timeSp);
+    //    NSLog(@"timeSp 3DES : %@", token);
     
     return token;
 }
@@ -89,7 +133,7 @@ NSString* compareKey(NSMutableDictionary *parameters) {
     // 最后需要MD5加密的字符串
     NSMutableString *contentString = [NSMutableString string];
     
-//    RSAEncryptor *rsaEncryptor = [RSAEncryptor rsa];
+    //    RSAEncryptor *rsaEncryptor = [RSAEncryptor rsa];
     
     for (NSString *key in compareKeys) {
         if ([key isEqualToString:@"mKey"]) continue;
@@ -124,39 +168,10 @@ NSString* compareKey(NSMutableDictionary *parameters) {
         i++;
         
         [contentString appendString:[valueString threeDesEncrypt]];
-//        [contentString appendString:valueString];
+        //        [contentString appendString:valueString];
     }
     
     return [contentString md5Encrypt_32Bit];
-}
-
-#pragma mark 网络请求POST类方法
-+ (nullable NSURLSessionDataTask *)requestPostByUrlString:(NSString * _Nullable)urlString
-                             parameters:(nullable id)parameters
-                               progress:(nullable void (^)(NSProgress * _Nullable uploadProgress)) uploadProgress
-                                success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
-                                failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure
-{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-//    manager.requestSerializer.timeoutInterval = 60.0; // 超时请求，默认60秒
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    
-    // port：端口参数；port 1安卓 2苹果
-//    [dict setObject:@"2" forKey:@"port#"]; // 加密情况下使用
-    [dict setObject:@"2" forKey:@"port"];
-    
-//    // token：时间戳
-//    NSString *token = tokenDes();
-//    [dict setObject:token forKey:@"token#"];
-//    
-//    // mKey：参数值和参数键加密
-//    NSString *mKey = compareKey(dict);
-////    NSLog(@"mKey : %@", mKey);
-//    [dict setObject:mKey forKey:@"mKey"];
-    
-    return [manager POST:[[NSString stringWithFormat:@"%@%@", kMainAPIDomain, urlString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] parameters:dict progress:uploadProgress success:success failure:failure];
 }
 
 @end
