@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 mac. All rights reserved.
 //
 
-#import "WBaseTableViewCtrl.h"
+#import <UIKit/UIKit.h>
 
 @class WFrostedRootViewCtrl;
-@interface WMenuTableViewCtrl : WBaseTableViewCtrl
+@interface WMenuTableViewCtrl : UITableViewController
 
 /*
  * 侧滑主控制器

@@ -45,29 +45,4 @@
  */
 @property (weak, nonatomic) IBOutlet UIView *msgRoundView;
 
-/*
- * 版本号距离右侧layout
- */
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *layoutRightByVersion;
-
-/*
- * 顶部分割线宽度layout
- */
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topLineWLayout;
-
-/*
- * 顶部分割线高度layout
- */
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topLineHLayout;
-
-/*
- * 底部分割线宽度layout
- */
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomLineWLayout;
-
-/*
- * 底部分割线高度layout
- */
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomLineHLayout;
-
 @end

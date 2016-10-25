@@ -42,6 +42,9 @@
         centerOffset = itemOffset + itemWidth - kScreenSize.width;
     }
     
+//    CGFloat centerOffsetX = fabs(self.view.center.x - cellFrameInSuperview.origin.x - (kScreenSize.width / _collectionItemCount / 2));
+//    NSLog(@"%f---%f", centerOffset, centerOffsetX);
+    
     [_collectionView setContentOffset:CGPointMake(centerOffset, 0) animated:YES];
 }
 
@@ -72,13 +75,13 @@
         [tableViews addObject:tableView]; // 存入临时tableView集合
         
         // 创建空数据view
-        [tableView setupEmptyDataViewWith:nil tipText:nil yOffset:0];
-        [tableView getEmptyDataViewKey].hidden = YES;
+        [tableView setupEmptyDataViewWithImageString:nil tipText:nil btnText:@"" margin:UIEdgeInsetsZero yImageOffset:64];
+        [tableView setEmptyViewHidden:YES];
         
         // 创建网络访问错误view
-        [tableView setupNetworkReloadViewWith:nil tipText:nil yOffset:0];
-        [[tableView getNetworkReloadBtnKey] addTarget:self action:@selector(networkReloadDataAction:) forControlEvents:UIControlEventTouchUpInside];
-        [tableView getNetworkReloadViewKey].hidden = YES;
+        [tableView setupNetworkReloadViewWithImageString:nil tipText:nil btnText:@"" margin:UIEdgeInsetsZero yImageOffset:94];
+        [tableView networkReloadButtonAddTarget:self action:@selector(networkReloadDataAction:) forControlEvents:UIControlEventTouchUpInside];
+        [tableView setNetworkReloadViewHidden:YES];
     }
     _tableViews = tableViews; // 赋值给tableView集合对象，供外部访问
     
@@ -121,22 +124,30 @@
 
 #pragma mark 下拉刷新对外访问函数，提供tableView
 - (void)tableViewPullDownRefresh:(UITableView *)tableView {
-    NSLog(@"tableViewPullDownRefresh");
+    if ([self.delegate respondsToSelector:@selector(tableViewPullDownRefresh:)]) {
+        [self.delegate tableViewPullDownRefresh:tableView];
+    }
 }
 
 #pragma mark 上拉刷新对外访问函数，提供tableView
 - (void)tableViewPullUpRefresh:(UITableView *)tableView {
-    NSLog(@"tableViewPullUpRefresh");
+    if ([self.delegate respondsToSelector:@selector(tableViewPullUpRefresh:)]) {
+        [self.delegate tableViewPullUpRefresh:tableView];
+    }
 }
 
 #pragma mark tableVew网络访问错误触发函数
 - (void)tableView:(UITableView *)tableView networkReloadDataAction:(UIButton *)sender {
-    NSLog(@"ZWScrollTableViewCtrlViewController tableNetworkReloadDataAction");
+    if ([self.delegate respondsToSelector:@selector(tableView:networkReloadDataAction:)]) {
+        [self.delegate tableView:tableView networkReloadDataAction:sender];
+    }
 }
 
 #pragma mark 导航按钮触发函数
 - (void)headerBtnDidSelectAtIndex:(NSIndexPath *)indexPath {
-//    NSLog(@"ZWScrollTableViewCtrlViewController didSelectAtIndex at %@", indexPath);
+    if ([self.delegate respondsToSelector:@selector(headerBtnDidSelectAtIndex:)]) {
+        [self.delegate headerBtnDidSelectAtIndex:indexPath];
+    }
 }
 
 #pragma mark - ---delegate and datasource---
@@ -286,18 +297,21 @@
     }
 }
 
+/** 导航按钮选中线颜色 **/
 - (void)setSelectedLineColor:(UIColor *)selectedLineColor {
     _selectedLineColor = selectedLineColor;
     
     _selectedLine.backgroundColor = selectedLineColor;
 }
 
+/** 导航按钮选中颜色 **/
 - (void)setSelectedNavTextColor:(UIColor *)selectedNavTextColor {
     _selectedNavTextColor = selectedNavTextColor;
     
     [_collectionView reloadData];
 }
 
+/** 导航按钮默认颜色 **/
 - (void)setNormalNavTextColor:(UIColor *)normalNavTextColor {
     _normalNavTextColor = normalNavTextColor;
     

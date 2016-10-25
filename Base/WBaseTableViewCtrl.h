@@ -8,8 +8,6 @@
 
 #import "WBaseViewController.h"
 
-@interface WBaseTableViewCtrl : WBaseViewController
-
-@property (nonatomic, weak) UITableView *tableView;
+@interface WBaseTableViewCtrl : UITableViewController
 
 @end

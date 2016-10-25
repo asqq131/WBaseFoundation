@@ -14,19 +14,19 @@
 //+ (instancetype)client;
 
 // 通用接口
-+ (nullable NSURLSessionDataTask *)requestWithMethod:(NSString * _Nullable)method
++ (nullable NSURLSessionDataTask *)baseRequestWithMethod:(NSString * _Nullable)method
                                            urlString:(NSString * _Nullable)urlString
                                           parameters:(NSDictionary * _Nullable)parameters
                                             progress:(nullable void (^)(NSProgress * _Nullable uploadProgress))uploadProgress
                                              success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
                                              failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure;
 
-+ (nullable NSURLSessionDataTask *)requestGetWithUrlString:(NSString * _Nullable)urlString
++ (nullable NSURLSessionDataTask *)GetWithUrlString:(NSString * _Nullable)urlString
                         parameters:(NSDictionary * _Nullable)parameters
                             success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
                             failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure;
 
-+ (nullable NSURLSessionDataTask *)requestPostWithUrlString:(NSString * _Nullable)urlString
++ (nullable NSURLSessionDataTask *)PostWithUrlString:(NSString * _Nullable)urlString
                              parameters:(nullable id)parameters
                                progress:(nullable void (^)(NSProgress * _Nullable uploadProgress)) uploadProgress
                                 success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success

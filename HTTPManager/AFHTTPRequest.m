@@ -35,7 +35,7 @@
 //    return self;
 //}
 
-+ (nullable NSURLSessionDataTask *)requestWithMethod:(NSString *)method
++ (nullable NSURLSessionDataTask *)baseRequestWithMethod:(NSString *)method
                                             urlString:(NSString * _Nullable)urlString
                                             parameters:(NSDictionary * _Nullable)parameters
                                             progress:(nullable void (^)(NSProgress * _Nullable uploadProgress))uploadProgress
@@ -71,16 +71,16 @@
 }
 
 #pragma mark 网络请求GET类方法
-+ (nullable NSURLSessionDataTask *)requestGetWithUrlString:(NSString * _Nullable)urlString
++ (nullable NSURLSessionDataTask *)GetWithUrlString:(NSString * _Nullable)urlString
                             parameters:(NSDictionary * _Nullable)parameters
                             success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
                             failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure
 {
-    return [self requestWithMethod:@"GET" urlString:urlString parameters:parameters progress:nil success:success failure:failure];
+    return [self baseRequestWithMethod:@"GET" urlString:urlString parameters:parameters progress:nil success:success failure:failure];
 }
 
 #pragma mark 网络请求POST类方法
-+ (nullable NSURLSessionDataTask *)requestPostWithUrlString:(NSString * _Nullable)urlString
++ (nullable NSURLSessionDataTask *)PostWithUrlString:(NSString * _Nullable)urlString
                              parameters:(nullable id)parameters
                                progress:(nullable void (^)(NSProgress * _Nullable uploadProgress))uploadProgress
                                 success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
@@ -101,7 +101,7 @@
 ////    NSLog(@"mKey : %@", mKey);
 //    [dict setObject:mKey forKey:@"mKey"];
     
-    return [self requestWithMethod:@"POST" urlString:urlString parameters:dict progress:uploadProgress success:success failure:failure];
+    return [self baseRequestWithMethod:@"POST" urlString:urlString parameters:dict progress:uploadProgress success:success failure:failure];
 }
 
 #pragma mark - 加密
