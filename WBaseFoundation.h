@@ -21,7 +21,7 @@
 #import "AFHTTPRequestHelper.h"
 
 // Categorys 自定义分类
-#import "UIView+FixRatio.h"
+//#import "UIView+FixRatio.h"
 #import "NSDateComponents+Timestamp.h"
 #import "NSString+GenerateUuid.h"
 #import "UIImage+IMTransform.h"

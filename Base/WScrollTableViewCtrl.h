@@ -6,9 +6,9 @@
 //  Copyright © 2016年 mac. All rights reserved.
 //
 
-#import "UIScrollView+Refresh.h"
 #import "WBaseViewController.h"
-#import "UIView+EmpyFalseDataView.h"
+#import "UIScrollView+Refresh.h"
+#import "UIView+EmptyFailureView.h"
 
 @protocol WScrollTableViewCtrlDelegate <NSObject>
 

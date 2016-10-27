@@ -43,34 +43,4 @@
  */
 @property (weak, nonatomic) IBOutlet UILabel *specialtyNameLabel;
 
-/*
- * 头像距离左侧layout
- */
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *picImageLeftLayout;
-
-/*
- * 头像宽度layout
- */
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *picWidthLayout;
-
-/*
- * 头像高度layout
- */
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *picHeightLayout;
-
-/*
- * 姓名距离左侧layout
- */
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameLeftLayout;
-
-/*
- * 擅长距离左侧layout
- */
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *specialtyLeftLayout;
-
-/*
- * 教龄距离左侧layout
- */
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *seniorityLeftLaytou;
-
 @end
