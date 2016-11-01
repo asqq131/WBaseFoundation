@@ -30,7 +30,24 @@
  UIViewAnimationOptionTransitionFlipFromBottom  //转场从下翻转
  **/
 
-- (void)transitionWithController:(UIViewController * __nonnull)vc
+- (void)transitionRootViewWithController:(UIViewController * __nonnull)vc
+                                duration:(NSTimeInterval)duration
+                                 options:(UIViewAnimationOptions)options
+                              completion:(void (^ __nullable)(BOOL finished))completion {
+    
+    [UIView transitionWithView:self.view.window
+                      duration:duration
+                       options:options
+                    animations:^(void) {
+                        BOOL oldState = [UIView areAnimationsEnabled];
+                        [UIView setAnimationsEnabled:NO];
+                        self.view.window.rootViewController = vc;
+                        [UIView setAnimationsEnabled:oldState];
+                    }
+                    completion:completion];
+}
+
+- (void)transitionToController:(UIViewController * __nonnull)tvc
                         duration:(NSTimeInterval)duration
                          options:(UIViewAnimationOptions)options
                       completion:(void (^ __nullable)(BOOL finished))completion {
@@ -41,7 +58,7 @@
                     animations:^(void) {
                         BOOL oldState = [UIView areAnimationsEnabled];
                         [UIView setAnimationsEnabled:NO];
-                        self.view.window.rootViewController = vc;
+                        [self.navigationController pushViewController:tvc animated:NO];
                         [UIView setAnimationsEnabled:oldState];
                     }
                     completion:completion];

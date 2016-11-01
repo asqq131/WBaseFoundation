@@ -53,8 +53,8 @@
 
 /** 根据count初始化所需tableView和导航按钮 **/
 - (void)setUpTableViewAtCount:(NSInteger)count;
-- (void)setUpTableViewAtCount:(NSInteger)count navTitles:(NSArray *)titles;
-- (void)setUpTableViewAtCount:(NSInteger)count navTitles:(NSArray *)titles customHeaderView:(UIView *)customHeaderView;
+- (void)setUpWithNavTitles:(NSArray *)titles;
+- (void)setUpWithNavTitles:(NSArray *)titles customHeaderView:(UIView *)customHeaderView;
 
 /** 更换导航按钮默认和选中颜色 **/
 - (void)updateWithNavTextNormalColor:(UIColor *)normalColor andSelectColor:(UIColor *)selectColor;

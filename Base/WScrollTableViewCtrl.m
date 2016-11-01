@@ -72,8 +72,6 @@
         [view removeFromSuperview];
     }
     
-    _tableViewCount = count;
-    
     NSMutableArray *tableViews = [NSMutableArray array];
     for (int i = 0; i < count; i++) {
         // init tableView
@@ -113,17 +111,17 @@
     _scrollView.contentSize = CGSizeMake(kScreenSize.width*count, CGRectGetHeight(_scrollView.frame));
 }
 
-- (void)setUpTableViewAtCount:(NSInteger)count navTitles:(NSArray *)titles {
-    [self setUpTableViewAtCount:count];
+- (void)setUpWithNavTitles:(NSArray *)titles {
+    [self setUpTableViewAtCount:_tableViewCount = titles.count];
     
     self.navTitles = titles;
 }
 
-- (void)setUpTableViewAtCount:(NSInteger)count navTitles:(NSArray *)titles customHeaderView:(UIView *)customHeaderView {
+- (void)setUpWithNavTitles:(NSArray *)titles customHeaderView:(UIView *)customHeaderView {
     self.customHeaderView = customHeaderView;
     [self.view addSubview:self.customHeaderView];
     
-    [self setUpTableViewAtCount:count navTitles:titles];
+    [self setUpWithNavTitles:titles];
 }
 
 #pragma mark 根据tableView设置下拉刷新
@@ -309,12 +307,12 @@
 - (void)setNavTitles:(NSArray *)navTitles {
     _navTitles = navTitles;
     
-    if (navTitles.count != _tableViewCount) {
-        [self showHint:@"导航按钮数目与列表数不一致"];
-        
-    } else {
+//    if (navTitles.count != _tableViewCount) {
+//        [self showHint:@"导航按钮数目与列表数不一致"];
+//        
+//    } else {
         [_collectionView reloadData];
-    }
+//    }
 }
 
 /** 导航按钮选中线颜色 **/
