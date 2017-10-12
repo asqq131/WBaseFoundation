@@ -8,6 +8,7 @@
 
 #import "WScrollTableViewCtrl.h"
 #import "WScrollHeaderCollectionCell.h"
+#import "WConstants.h"
 
 #define kMaxCollectionItemCount 3
 

@@ -7,7 +7,6 @@
 //
 
 #import "LocationManager.h"
-#import <CoreLocation/CoreLocation.h>
 
 @implementation LocationManager
 

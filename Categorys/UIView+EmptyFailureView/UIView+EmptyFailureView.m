@@ -8,14 +8,7 @@
 
 #import "UIView+EmptyFailureView.h"
 #import <objc/runtime.h>
-
-#define kNetworkFailTip @"网络连接失败!"
-#define kEmptyTip @"当前没有更多的数据!"
-// 图片路径
-#define kResourceName(file) [@"ResourceImages.bundle" stringByAppendingPathComponent:file]
-
-#define kFixRatioHeightAtIphone6(H) ((H) / 647.0) * [UIScreen mainScreen].applicationFrame.size.height
-#define kFixRatioWidthAtIphone6(W) ((W) / 375.0) * [UIScreen mainScreen].applicationFrame.size.width
+#import "WConstants.h"
 
 @implementation UIView (EmpyFalseDataView)
 
@@ -44,14 +37,14 @@ static char networkReloadTipKey;
     if (![imageString isEqualToString:@""] && imageString) {
         icon = [UIImage imageNamed:imageString];
     } else {
-        icon = [UIImage imageNamed:kResourceName(@"msg_ic_data")];
+        icon = [UIImage imageNamed:kResourceSrcName(@"msg_ic_data")];
     }
     
     NSString *tipText;
     if (tip && ![tip isEqualToString:@""]) {
         tipText = tip;
     } else {
-        tipText = kEmptyTip;
+        tipText = kEmptyDataTip;
     }
     
     CGSize iconSize = CGSizeMake(icon.size.width, icon.size.height);
@@ -84,21 +77,21 @@ static char networkReloadTipKey;
     CGFloat btnTopDistance = 65.0f;
     CGFloat imageLeftPadding = (CGRectGetWidth(self.frame) - iconSize.width) / 2;
     CGFloat btnPadding = 30.0f;
-    CGFloat btnWidth = [UIScreen mainScreen].applicationFrame.size.width - btnPadding * 2;
+    CGFloat btnWidth = kScreenSize.width - btnPadding * 2;
     NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(emptyDataView, verifyImageView, tipLabel, reloadButton);
-    NSDictionary *metrics = @{@"topMargin":@(kFixRatioHeightAtIphone6(margin.top)),
-                              @"leftMargin":@(kFixRatioWidthAtIphone6(margin.left)),
-                              @"bottomMargin":@(kFixRatioHeightAtIphone6(margin.bottom)),
-                              @"rightMargin":@(kFixRatioWidthAtIphone6(margin.right)),
-                              @"imageWidth":@(kFixRatioWidthAtIphone6(iconSize.width)),
-                              @"imageHeight":@(kFixRatioHeightAtIphone6(iconSize.height)),
-                              @"btnTopDistance":@(kFixRatioHeightAtIphone6(btnTopDistance)),
-                              @"btnWidth":@(kFixRatioWidthAtIphone6(btnWidth)),
-                              @"btnPadding":@(kFixRatioWidthAtIphone6(btnPadding)),
-                              @"topDistance":@(kFixRatioHeightAtIphone6(topDistance)),
-                              @"imageLeftPadding":@(kFixRatioWidthAtIphone6(imageLeftPadding)),
-                              @"tipLeftPadding":@(kFixRatioWidthAtIphone6(imageLeftPadding - 25)),
-                              @"tipWidth":@(kFixRatioWidthAtIphone6(iconSize.width + 40))};
+    NSDictionary *metrics = @{@"topMargin":@(kScale(margin.top)),
+                              @"leftMargin":@(kScale(margin.left)),
+                              @"bottomMargin":@(kScale(margin.bottom)),
+                              @"rightMargin":@(kScale(margin.right)),
+                              @"imageWidth":@(kScale(iconSize.width)),
+                              @"imageHeight":@(kScale(iconSize.height)),
+                              @"btnTopDistance":@(kScale(btnTopDistance)),
+                              @"btnWidth":@(kScale(btnWidth)),
+                              @"btnPadding":@(kScale(btnPadding)),
+                              @"topDistance":@(kScale(topDistance)),
+                              @"imageLeftPadding":@(kScale(imageLeftPadding)),
+                              @"tipLeftPadding":@(kScale(imageLeftPadding - 25)),
+                              @"tipWidth":@(kScale(iconSize.width + 40))};
     
     [self addConstraints:
      [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[emptyDataView]-bottomMargin-|"
@@ -141,7 +134,7 @@ static char networkReloadTipKey;
                                                         toItem:nil
                                                      attribute:NSLayoutAttributeNotAnAttribute
                                                     multiplier:1.0f
-                                                      constant:kFixRatioWidthAtIphone6(iconSize.width + 40)]];
+                                                      constant:kScale(iconSize.width + 40)]];
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:tipLabel
                                                      attribute:NSLayoutAttributeCenterX
@@ -201,14 +194,14 @@ static char networkReloadTipKey;
     if (![imageString isEqualToString:@""] && imageString) {
         icon = [UIImage imageNamed:imageString];
     } else {
-        icon = [UIImage imageNamed:kResourceName(@"msg_network")];
+        icon = [UIImage imageNamed:kResourceSrcName(@"msg_network")];
     }
     
     NSString *tipText;
     if (tip && ![tip isEqualToString:@""]) {
         tipText = tip;
     } else {
-        tipText = kNetworkFailTip;
+        tipText = kNetworkConnectFailTip;
     }
     
     CGSize iconSize = CGSizeMake(icon.size.width, icon.size.height);
@@ -234,8 +227,8 @@ static char networkReloadTipKey;
     reloadButton.layer.cornerRadius = 4.0f;
 //    [reloadButton setTitle:btnText forState:UIControlStateNormal];
 //    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [reloadButton setImage:[UIImage imageNamed:kResourceName(@"msg_ic_loading")] forState:UIControlStateNormal];
-    [reloadButton setImage:[UIImage imageNamed:kResourceName(@"msg_ic_loading_sel")] forState:UIControlStateSelected];
+    [reloadButton setImage:[UIImage imageNamed:kResourceSrcName(@"msg_ic_loading")] forState:UIControlStateNormal];
+    [reloadButton setImage:[UIImage imageNamed:kResourceSrcName(@"msg_ic_loading_sel")] forState:UIControlStateSelected];
     [networkReloadView addSubview:reloadButton];
     
     CGFloat topDistance = yOffset;
@@ -243,22 +236,22 @@ static char networkReloadTipKey;
     CGFloat tipTopDistance = 15.0f;
     CGFloat imageLeftPadding = (CGRectGetWidth(self.frame) - iconSize.width) / 2;
     CGFloat btnPadding = 30.0f;
-    CGFloat btnWidth = [UIScreen mainScreen].applicationFrame.size.width - btnPadding * 2;
+    CGFloat btnWidth = kScreenSize.width - btnPadding * 2;
     NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(networkReloadView, verifyImageView, tipLabel, reloadButton);
-    NSDictionary *metrics = @{@"topMargin":@(kFixRatioHeightAtIphone6(margin.top)),
-                              @"leftMargin":@(kFixRatioWidthAtIphone6(margin.left)),
-                              @"bottomMargin":@(kFixRatioHeightAtIphone6(margin.bottom)),
-                              @"rightMargin":@(kFixRatioWidthAtIphone6(margin.right)),
-                              @"imageWidth":@(kFixRatioWidthAtIphone6(iconSize.width)),
-                              @"imageHeight":@(kFixRatioHeightAtIphone6(iconSize.height)),
-                              @"btnTopDistance":@(kFixRatioHeightAtIphone6(btnTopDistance)),
-                              @"btnWidth":@(kFixRatioWidthAtIphone6(btnWidth)),
-                              @"btnPadding":@(kFixRatioWidthAtIphone6(btnPadding)),
-                              @"topDistance":@(kFixRatioHeightAtIphone6(topDistance)),
-                              @"imageLeftPadding":@(kFixRatioWidthAtIphone6(imageLeftPadding)),
-                              @"tipLeftPadding":@(kFixRatioWidthAtIphone6(imageLeftPadding - 25)),
-                              @"tipWidth":@(kFixRatioWidthAtIphone6(iconSize.width + 40)),
-                              @"tipTopDistance":@(kFixRatioHeightAtIphone6(tipTopDistance))};
+    NSDictionary *metrics = @{@"topMargin":@(kScale(margin.top)),
+                              @"leftMargin":@(kScale(margin.left)),
+                              @"bottomMargin":@(kScale(margin.bottom)),
+                              @"rightMargin":@(kScale(margin.right)),
+                              @"imageWidth":@(kScale(iconSize.width)),
+                              @"imageHeight":@(kScale(iconSize.height)),
+                              @"btnTopDistance":@(kScale(btnTopDistance)),
+                              @"btnWidth":@(kScale(btnWidth)),
+                              @"btnPadding":@(kScale(btnPadding)),
+                              @"topDistance":@(kScale(topDistance)),
+                              @"imageLeftPadding":@(kScale(imageLeftPadding)),
+                              @"tipLeftPadding":@(kScale(imageLeftPadding - 25)),
+                              @"tipWidth":@(kScale(iconSize.width + 40)),
+                              @"tipTopDistance":@(kScale(tipTopDistance))};
     
     [self addConstraints:
      [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[networkReloadView]-bottomMargin-|"
@@ -295,7 +288,7 @@ static char networkReloadTipKey;
                                                             toItem:nil
                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                         multiplier:1.0f
-                                                          constant:kFixRatioWidthAtIphone6(iconSize.width + 40)]];
+                                                          constant:kScale(iconSize.width + 40)]];
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:tipLabel
                                                      attribute:NSLayoutAttributeCenterX

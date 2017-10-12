@@ -8,6 +8,7 @@
 
 #import "AFHTTPRequestHelper.h"
 #import "AFHTTPRequest.h"
+#import "WConstants.h"
 
 @implementation AFHTTPRequestHelper
 

@@ -7,6 +7,7 @@
 //
 
 #import "MenuTableViewCell.h"
+#import "WConstants.h"
 
 @interface MenuTableViewCell ()
 
@@ -40,6 +41,8 @@
 @implementation MenuTableViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     self.backgroundColor = [UIColor clearColor];
     
     _disclosureIndicatorImageView.image = [UIImage imageNamed:kResourceSrcName(@"ic_into")];

@@ -7,11 +7,11 @@
 //
 
 #import "WMenuTableViewCtrl.h"
-
 #import <QuartzCore/QuartzCore.h>
 #import "MenuTableViewCell.h"
 #import "MenuTableHeaderView.h"
 #import "WFrostedRootViewCtrl.h"
+#import "WConstants.h"
 
 #define kCellHeight (kIsIphone4s ? 49.0/647.0*kScreenSize.height : 49.0)
 

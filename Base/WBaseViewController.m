@@ -7,6 +7,7 @@
 //
 
 #import "WBaseViewController.h"
+#import "WConstants.h"
 
 @interface WBaseViewController ()
 

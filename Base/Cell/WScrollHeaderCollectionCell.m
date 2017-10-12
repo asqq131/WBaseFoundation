@@ -7,10 +7,13 @@
 //
 
 #import "WScrollHeaderCollectionCell.h"
+#import "WConstants.h"
 
 @implementation WScrollHeaderCollectionCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     _itemBtn.userInteractionEnabled = NO;
     _itemBtn.backgroundColor = [UIColor whiteColor];
     _itemBtn.titleLabel.font = [UIFont systemFontOfSize: kIsIphone4s ? 14 : 15];

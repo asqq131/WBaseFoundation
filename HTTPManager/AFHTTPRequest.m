@@ -10,7 +10,7 @@
 #import "NSString+ThreeDES.h"
 #import "NSString+MD5Encrypt.h"
 #import "RSAEncryptor.h"
-//#import "ZWConstant.h"
+#import "WConstants.h"
 
 @implementation AFHTTPRequest
 

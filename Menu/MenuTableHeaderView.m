@@ -8,6 +8,7 @@
 
 #import "MenuTableHeaderView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "WConstants.h"
 
 @interface MenuTableHeaderView ()
 
@@ -46,6 +47,8 @@
 @implementation MenuTableHeaderView
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     // 设置layer，把头像改成圆形
     _picImageView.layer.masksToBounds = YES;
     _picImageView.layer.cornerRadius = 40.0;

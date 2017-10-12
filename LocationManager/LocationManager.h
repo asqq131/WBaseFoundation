@@ -6,9 +6,10 @@
 //  Copyright © 2016年 wu. All rights reserved.
 //
 
-typedef void(^CallBackLoaction)(CLPlacemark *placemark, NSError *error);
-
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
+
+typedef void(^CallBackLoaction)(CLPlacemark *placemark, NSError *error);
 
 @interface LocationManager : NSObject <CLLocationManagerDelegate>
 

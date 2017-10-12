@@ -7,6 +7,7 @@
 //
 
 #import "WBaseNavigationCtrl.h"
+#import "WConstants.h"
 
 @interface WBaseNavigationCtrl ()
 

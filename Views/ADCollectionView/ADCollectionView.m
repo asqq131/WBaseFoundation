@@ -7,10 +7,11 @@
 //
 
 #import "ADCollectionView.h"
+#import "WConstants.h"
 
 #define kADCount 3
 #define kCollectionCellId @"collectionCellId"
-#define kCollectionItemSize CGSizeMake(KScreenWidth, KScreenHeight)
+#define kCollectionItemSize CGSizeMake(kScreenSize.width, kScreenSize.height)
 
 @interface ADCollectionViewCell : UICollectionViewCell
 
@@ -58,7 +59,7 @@
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
         
-        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, KScreenHeight - 2*KScale(10), KScreenWidth, KScale(10))];
+        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, kScreenSize.height - 2*kScale(10), kScreenSize.width, kScale(10))];
         self.pageControl.numberOfPages = kADCount;
         self.pageControl.currentPageIndicatorTintColor = [UIColor blueColor];
         self.pageControl.pageIndicatorTintColor = [UIColor grayColor];
@@ -104,7 +105,7 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSInteger page = scrollView.contentOffset.x / KScreenWidth;
+    NSInteger page = scrollView.contentOffset.x / kScreenSize.width;
     
     if (page == kADCount) {
         self.callBack();

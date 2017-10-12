@@ -70,6 +70,7 @@
 #endif
 #endif
 
+#define kTestModel          0
 #define kMainAPIDomain @""
 #define kAppItunesId @""
 
@@ -84,14 +85,14 @@
 
 #define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 
-//#define kScreenSize [UIScreen mainScreen].bounds.size
-#define kScreenSize [UIScreen mainScreen].applicationFrame.size
+#define kScreenSize [UIScreen mainScreen].bounds.size
+//#define kScreenSize [UIScreen mainScreen].applicationFrame.size
 
 #define kIsIphone4s (kScreenSize.height == (480-20))
 #define kIsIphone5 (kScreenSize.height == (568-20))
 
-#define kFixRatioHeightByIphone6(H) ((H) / 647.0) * [UIScreen mainScreen].applicationFrame.size.height
-#define kFixRatioWidthByIphone6(W) ((W) / 375.0) * [UIScreen mainScreen].applicationFrame.size.width
+#define kSreenWidthScale   kScreenSize.width/375.0  //以iphone5 屏幕为基准
+#define kScale(x)   (x)*(kSreenWidthScale)
 
 #define kNetworkConnectFailTip @"网络连接失败!"
 #define kEmptyDataTip @"当前没有更多的数据!"
@@ -102,5 +103,8 @@
 
 // 通知
 #define kNotificationNameByMenuSelected @"MenuSelectedNotification"
+
+#define kIsNotFirstLoad @"isNotFirstLoad"
+#define kAppVersion @"appVersion"
 
 #endif /* WConstantss_h */

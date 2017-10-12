@@ -9,6 +9,7 @@
 #import "WFrostedRootViewCtrl.h"
 #import "WBaseTabBarCtrl.h"
 #import "WMenuTableViewCtrl.h"
+#import "WConstants.h"
 
 @interface WFrostedRootViewCtrl () <UIGestureRecognizerDelegate> {
     CGFloat _distance;

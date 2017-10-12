@@ -8,6 +8,7 @@
 
 #import "WBaseTabBarCtrl.h"
 #import "WFrostedRootViewCtrl.h"
+#import "WConstants.h"
 
 @interface WBaseTabBarCtrl () {
     
