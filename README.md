@@ -3,7 +3,7 @@ iOS W标识自建框架
 
 1.引导图view使用
 
-``- (void)checkFirstLoad {`
+`
     
     __weak __typeof(self)weakSelf = self;
     void(^showAd)() = ^() {
@@ -31,5 +31,5 @@ iOS W标识自建框架
         //        showAd();
     }
     
-    [userDefaults setValue:version forKey:kAppVersion];}`
+    [userDefaults setValue:version forKey:kAppVersion];`
 
