@@ -2,7 +2,6 @@
 iOS W标识自建框架
 
 1.引导图view使用
-#pragma mark - 引导图
 
 - (void)checkFirstLoad {
     if (kTestModel) {
